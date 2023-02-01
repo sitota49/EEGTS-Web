@@ -10,7 +10,7 @@
             <h2 class="intro-y text-lg font-medium mt-10">List of Pools</h2>
             <div class="grid grid-cols-12 gap-6 mt-5">
                 <div class="intro-y col-span-12 flex flex-row sm:flex-nowrap items-center mt-2">
-                    <button  @click="showModal = true" class="btn btn-primary shadow-md mr-2" data-modal-target="authentication-modal" data-modal-toggle="authentication-modal">Create Pool
+                    <button  v-on:click="toggleModal()" class="btn btn-primary shadow-md mr-2" data-modal-target="authentication-modal" data-modal-toggle="authentication-modal">Create Pool
                         <Icon name="material-symbols:add-box-rounded" class="w-6 h-6 ml-2 text-white"></Icon>
                     </button>
                 
@@ -114,50 +114,83 @@
                 </div>
                 <!-- END: Pagination -->
             </div>
-            <CreatePoolModal v-show="showModal" @close-modal="showModal = false" />
-            
-            <!-- BEGIN: Delete Confirmation Modal -->
-            <!-- <Modal :show="deleteConfirmationModal" @hidden="deleteConfirmationModal = false">
-                <ModalBody class="p-0">
-                    <div class="p-5 text-center">
-                        <XCircleIcon class="w-16 h-16 text-danger mx-auto mt-3" />
-                        <div class="text-3xl mt-5">Are you sure?</div>
-                        <div class="text-slate-500 mt-2">
-                            Do you really want to delete these records? <br />This process cannot
-                            be undone.
+          
+            <div>
+               
+                <div v-if="showModal"
+                    class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+                    <div class="relative w-2/6 my-6 mx-auto max-w-10xl">
+                        <!--content-->
+                        <div
+                            class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                            <!--header-->
+                            <div class="flex items-start justify-between p-5 border-solid border-slate-200 rounded-t">
+                                <!-- <h3 class="text-3xl font-semibold">
+                                    Modal Title
+                                </h3> -->
+                                <button
+                                    class="ml-auto text-gray-500 hover:text-black bg-transparent font-bold uppercase text-sm py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                    type="button" v-on:click="toggleModal()">
+                                    <Icon name="iconoir:cancel" class="w-6 h-6"></Icon>
+                                </button>
+                            </div>
+                            <!--body-->
+                            <div class="relative p-6 flex-auto">
+                                <div class="flex flex-row align-middle">
+<p class="w-8/12 align-middle my-auto font-bold text-lg">Question pool Name</p>
+                                    <input type="text" class="intro-x login__input form-control py-3 px-4 block" placeholder="Enter Pool Name"
+                                        v-model="poolInfo.name">
+                                </div>
+                            </div>
+                            <!--footer-->
+                            <div class="flex items-center justify-center p-6 border-solid border-slate-200 rounded-b">
+                               
+                            <button @click="addPool" class="bg-primary rounded-xl w-5/12 text-white py-3 px-4 text-center">
+                                Add
+                            </button>
+
+                            </div>
                         </div>
                     </div>
-                    <div class="px-5 pb-8 text-center">
-                        <button type="button" @click="deleteConfirmationModal = false" class="btn btn-outline-secondary w-24 mr-1">
-                            Cancel
-                        </button>
-                        <button type="button" class="btn btn-danger w-24">Delete</button>
-                    </div>
-                </ModalBody>
-            </Modal> -->
+                </div>
+                <div v-if="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
+            </div>
+
+
             </div>
         </div>
     </div>
 </template>
 <script>
-import AdminTopBar from '~~/components/admin/TopBar.vue'
-import AdminSideBar from '~~/components/admin/SideBar.vue';
-import CreatePoolModal from '~~/components/admin/CreatePoolModal.vue';
+import AdminTopBar from '~~/components/TopBar.vue'
+import AdminSideBar from '~~/components/admin/AdminSideBar.vue';
 
 import { ref } from "vue";
 
-const deleteConfirmationModal = ref(false);
 
 export default {
-    components: {AdminSideBar, AdminTopBar, CreatePoolModal},
+    components: {AdminSideBar, AdminTopBar},
     name: 'QuestionPools',
     data() {
         return{
             pools: [{ "id": "1", "name": "Chemistry", "numberofQuestions": 180 }, { "id": "2", "name": "Physics", "numberofQuestions": 90 }, { "id": "3", "name": "Biology", "numberofQuestions": 120 }],
             showModal: false,
+            poolInfo: {
+                name: '',
+            },
 
         }
 
     },
+    methods: {
+        toggleModal: function () {
+            this.showModal = !this.showModal;
+        },
+        addPool() {
+            //TODO : form validation 
+            console.log(this.poolInfo);
+            this.showModal = false;
+        }
+    }
 }
 </script>

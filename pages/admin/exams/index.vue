@@ -10,10 +10,11 @@
                 <h2 class="intro-y text-lg font-medium mt-10">List of exams</h2>
                 <div class="grid grid-cols-12 gap-6 mt-5">
                     <div class="intro-y col-span-12 flex flex-row sm:flex-nowrap items-center mt-2">
+                        <NuxtLink :to="`/admin/create-exam`">
                         <button class="btn btn-primary shadow-md mr-2">Create exam
                             <Icon name="material-symbols:add-box-rounded" class="w-6 h-6 ml-2 text-white"></Icon>
                         </button>
-            
+                        </NuxtLink>
                         <div class="hidden md:block mx-auto text-slate-500">
                             Showing 1 to 10 of {{ exams.length }} entries
                         </div>
@@ -152,8 +153,8 @@
     </div>
 </template>
 <script>
-import AdminTopBar from '~~/components/admin/TopBar.vue'
-import AdminSideBar from '~~/components/admin/SideBar.vue';
+import AdminTopBar from '~~/components/TopBar.vue'
+import AdminSideBar from '~~/components/admin/AdminSideBar.vue';
 export default {
     components: {AdminSideBar, AdminTopBar},
     name: 'Exams',

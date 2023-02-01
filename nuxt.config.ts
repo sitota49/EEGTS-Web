@@ -1,10 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 export default defineNuxtConfig({
-  pages :true,
+  pages: true,
+
   typescript: {
     shim: false,
   },
-  modules: ["@nuxtjs/tailwindcss", "nuxt-icon"],
+  // ssr: false,
+  modules: ["@nuxtjs/tailwindcss", "nuxt-icon",],
+
   css: ["@/assets/css/app.css"],
+ 
 });

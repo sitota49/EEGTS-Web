@@ -157,7 +157,7 @@
     </div>
 </template>
 <script>
-import AdminTopBar from '~~/components/admin/TopBar.vue'
+import AdminTopBar from '~~/components/TopBar.vue'
 
 export default {
     components: {  AdminTopBar },

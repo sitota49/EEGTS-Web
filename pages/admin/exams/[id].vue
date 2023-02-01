@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import AdminTopBar from '~~/components/admin/TopBar.vue'
-import AdminSideBar from '~~/components/admin/SideBar.vue';
+import AdminTopBar from '~~/components/TopBar.vue'
+import AdminSideBar from '~~/components/admin/AdminSideBar.vue';
 export default {
     components: { AdminSideBar, AdminTopBar },
     name: 'ExamGroupDeatil',
