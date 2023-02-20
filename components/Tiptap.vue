@@ -155,7 +155,7 @@
 
 <div class="w-7/12"> 
 
-    <editor-content :editor="editor" class="border boder-1 border-gray-900 rounded-md h-40 -mt-6"/>
+    <editor-content :editor="editor"/>
 </div>
 
 </div>
@@ -174,6 +174,7 @@ import TableRow from '@tiptap/extension-table-row'
 import TableHeader from '@tiptap/extension-table-header'
 import TableCell from '@tiptap/extension-table-cell'
 import Table from '@tiptap/extension-table'
+import Image from '@tiptap/extension-image'
 
 
 
@@ -230,10 +231,14 @@ export default {
                 Table.configure({
                     resizable: true,
                 }),
+                Image.configure({
+                    allowBase64: true,
+                }),
+                
             ],
             editorProps: {
                 attributes: {
-                    class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-2xl m-5 focus:outline-none',
+                    class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-2xl rounded-md outline outline-1 outline-gray-400 ',
                 },
             },
             content: this.modelValue,
@@ -255,6 +260,8 @@ export default {
 <style lang="scss">
 /* Basic editor styles */
 .ProseMirror {
+     min-height: 80px;
+     padding: 1rem;
     >*+* {
         margin-top: 0.75em;
     }

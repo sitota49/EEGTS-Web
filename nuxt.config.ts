@@ -7,8 +7,7 @@ export default defineNuxtConfig({
     shim: false,
   },
   // ssr: false,
-  modules: ["@nuxtjs/tailwindcss", "nuxt-icon",],
+  modules: ["@nuxtjs/tailwindcss", "nuxt-icon", "@nuxtjs/supabase"],
 
   css: ["@/assets/css/app.css"],
- 
 });

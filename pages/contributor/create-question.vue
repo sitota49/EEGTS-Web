@@ -17,34 +17,34 @@
   
                 <div class="mx-auto relative before:hidden before:lg:block before:absolute before:w-[69%] before:h-[3px] before:top-0 before:bottom-0 before:mt-4 before:bg-slate-100 before:dark:bg-darkmode-400 flex flex-col lg:flex-row justify-center px-5 sm:px-20">
                      <div class="intro-x lg:text-center flex items-center lg:block flex-1 z-10">
-                    <button class="w-10 h-10 rounded-full " :class="{ 
+                    <span class="w-10 h-10 rounded-full btn" :class="{ 
                                'btn btn-primary': step === 1, 
                    'text-slate-500 bg-slate-100' : step !== 1
-                        }">1</button>
+                        }">1</span>
                     <div class=" text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400"
                         :class="{'font-medium': step === 1}">
                         Create Question
                     </div>
                 </div>
                 <div class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
-                    <button class="w-10 h-10 rounded-full btn" :class="{ 
+                    <span class="w-10 h-10 rounded-full btn" :class="{ 
                                'btn btn-primary': step === 2, 
                    'text-slate-500 bg-slate-100' : step !== 2
                         }">
                         2
-                    </button>
+                    </span>
                     <div class=" text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400"
                         :class="{'font-medium': step === 2}">
                         Add Choices
                     </div>
                 </div>
                 <div class="intro-x lg:text-center flex items-center mt-5 lg:mt-0 lg:block flex-1 z-10">
-                    <button class="w-10 h-10 rounded-full btn" :class="{ 
+                    <span class="w-10 h-10 rounded-full btn" :class="{ 
                                'btn btn-primary': step === 3, 
                    'text-slate-500 bg-slate-100' : step !== 3
                         }">
                         3
-                    </button>
+                    </span>
                     <div class=" text-base lg:mt-3 ml-3 lg:mx-auto text-slate-600 dark:text-slate-400"
                         :class="{'font-medium': step === 3}">
                         Select Correct Answer
@@ -57,34 +57,100 @@
 <div class="mt-10 py-5 px-5">
     <div v-if="step === 1" class="w-10/12">
         <div class="font-medium text-base">Enter the question below</div>
-        <div class="px-10 my-2">
-
-
-        </div>
-  
+    
         <div class="py-3">
             <client-only>
                 <Tiptap v-model="questionInfo.title" class="w-screen" />
             </client-only>
         </div>
-
+       <form data-single="true" action="/file-upload">
+        <div class="fallback">
+            <input name="file" type="file"  />
+        </div>
+     
+    </form>
        <div v-if="questionInfo.title.length>10" class="py-2 ml-auto w-1/12">
 
            <div @click="nextStep" class="btn btn-primary">Next</div>
        </div>
-
-            <h1>{{ questionInfo.title }}</h1>
-
     </div>
-    <div v-else-if="step === 2">
-        <!-- Step 2 content goes here -->
-        <button @click="prevStep">Previous</button>
-        <button @click="nextStep">Next</button>
+    <div v-else-if="step === 2" >
+            <div class="py-3 inline-block">
+                <h2 class="font-bold text-lg">Choice One</h2>
+                <client-only>
+                    <Tiptap v-model="questionInfo.choiceOne" class="w-screen " />
+                </client-only>
+            </div>
+             <div class="pt-8 inline-block">
+                <h2 class="font-bold text-lg">Choice Two</h2>
+                <client-only>
+                    <Tiptap v-model="questionInfo.choiceTwo" class="w-screen " />
+                </client-only>
+            </div>
+                       <div class="pt-8 inline-block">
+                    <h2 class="font-bold text-lg">Choice Three</h2>
+                <client-only>
+                    <Tiptap v-model="questionInfo.choiceThree" class="w-screen" />
+                </client-only>
+            </div>
+                       <div class="pt-8 inline-block">
+                    <h2 class="font-bold text-lg">Choice Four</h2>
+                <client-only>
+                    <Tiptap v-model="questionInfo.choiceFour" class="w-screen" />
+                </client-only>
+            </div>
+            <div class="flex flex-row mt-5 w-10/12">
+
+                <button @click="prevStep" class="btn btn-primary">Previous</button>
+                 <div v-if="questionInfo.choiceOne.length > 6 && questionInfo.choiceTwo.length > 6 && questionInfo.choiceThree.length > 6 && questionInfo.choiceFour.length > 6" class="py-2 ml-auto w-1/12">
+                <button @click="nextStep" class="btn btn-primary">Next</button>
+                </div>
+            </div>
     </div>
     <div v-else-if="step === 3">
-        <!-- Step 3 content goes here -->
-        <button @click="prevStep">Previous</button>
-        <button @click="submit">Submit</button>
+        <h1 class="font-bold text-lg">Question</h1>
+        <div v-html="questionInfo.title" class="p-2"></div>
+
+        <div class="py-2">
+        <div class="flex flex-row align-middle my-1">
+            <input  id="radio_1" type="radio" name="radio" v-model="correctAnswer" value="choiceOne">
+                  <label class="pl-2 " for="radio_1" >
+                   
+                <div v-html="questionInfo.choiceOne"></div>
+                  </label>
+                  </div>
+                   <div class="flex flex-row align-middle my-1">
+                <input  id="radio_1" type="radio" name="radio" v-model="correctAnswer" value="choiceTwo">
+                      <label class="pl-2 " for="radio_1" >
+                       
+                    <div v-html="questionInfo.choiceTwo"></div>
+                      </label>
+                      </div>
+                         <div class="flex flex-row align-middle my-1">
+                    <input  id="radio_1" type="radio" name="radio" v-model="correctAnswer" value="choiceThree">
+                          <label class="pl-2 " for="radio_1" >
+                           
+                        <div v-html="questionInfo.choiceThree"></div>
+                          </label>
+                          </div>
+                             <div class="flex flex-row align-middle my-1">
+                    <input  id="radio_1" type="radio" name="radio" v-model="correctAnswer" value="choiceFour">
+                          <label class="pl-2 " for="radio_1" >
+                           
+                        <div v-html="questionInfo.choiceFour"></div>
+                          </label>
+                          </div>
+
+    </div>
+
+
+         <div class="flex flex-row mt-5 ">
+    
+                    <button @click="prevStep" class="btn btn-primary">Previous</button>
+                     <div v-if="correctAnswer.length>2" class="py-2 ml-auto w-1/12">
+                    <button @click="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
     </div>
 </div>
 
@@ -94,26 +160,7 @@
            
             
 
-                    <div v-if="questionInfo.choiceOne.length > 24 && questionInfo.choiceTwo.length > 24 && questionInfo.choiceThree.length > 24 && questionInfo.choiceFour.length > 24">
-                    
-                    
-                    <div class="flex flex-row w-4/6 mt-3 ">
-                        <label for="horizontal-form-1" class="my-auto w-2/6  font-medium">Correct Answer</label>
-                        <div class="flex flex-row rounded-md border">
-                            <div class="  w-10 flex items-center justify-center bg-white rounded-l-md text-gray-400 ">
-                                <Icon name="tabler:checkup-list" class="w-4 h-4 my-auto"></Icon>
-                            </div>
-                    
-                    <DropDownSelect :optionslist="[
-                    { 'id':'choiceOne', 'name': 'Choice 1'}
-                    ,{ 'id':'choiceTwo', 'name': 'Choice 2'}
-                    ,{ 'id':'choiceThree', 'name': 'Choice 3'}
-                    ,{ 'id':'choiceFour', 'name': 'Choice 4'}]" v-model="questionInfo.correctAnswer"
-                        title="Choose Answer" class="" />
-                        </div>
-                    </div>
-                    
-                    </div>
+                  
                 </div>
                 <!-- END: Form Layout -->
             </div>
@@ -129,6 +176,7 @@ import AdminTopBar from '~~/components/TopBar.vue'
 import ContributorSideBar from '~~/components/contributor/ContributorSideBar.vue';
 import DropDownSelect from '~~/components/DropDownSelect.vue';
 import Tiptap from '~~/components/Tiptap.vue';
+
 export default {
     components: { ContributorSideBar, AdminTopBar, DropDownSelect, Tiptap },
     name: 'CreateQuestion',
@@ -144,8 +192,8 @@ export default {
             },
             correctAnswer :'',
             data:'1',
-            step: 1
-           
+            step: 1,
+      
         }
 
     },
@@ -154,9 +202,10 @@ export default {
     },
  
     methods: {
-        addQuestion() {
+        submit() {
             //TODO : form validation 
             console.log(this.questionInfo);
+            console.log(this.correctAnswer);
         },
         nextStep() {
             this.step++;
@@ -164,7 +213,7 @@ export default {
         prevStep() {
             this.step--;
         },
-        
+      
         
     }
 }
